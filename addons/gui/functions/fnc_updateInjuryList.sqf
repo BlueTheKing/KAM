@@ -129,38 +129,7 @@ if (_target call ACEFUNC(common,isAwake)) then {
     };
 };
 
-// Add entries for open, bandaged, and stitched wounds
 private _woundEntries = [];
-
-private _fnc_processWounds = {
-    params ["_wounds", "_format", "_color"];
-
-    {
-        _x params ["_woundClassID", "_amountOf"];
-
-        if (_amountOf > 0) then {
-            private _classIndex = _woundClassID / 10;
-            private _category   = _woundClassID % 10;
-
-            private _className = ACEGVAR(medical_damage,woundClassNames) select _classIndex;
-            private _suffix = ["Minor", "Medium", "Large"] select _category;
-            private _woundName = localize format [ACELSTRING(medical_damage,%1_%2), _className, _suffix];
-
-            private _woundDescription = if (_amountOf >= 1) then {
-                format ["%1x %2", ceil _amountOf, _woundName]
-            } else {
-                format [localize ACELSTRING(medical_gui,PartialX), _woundName]
-            };
-
-            _woundEntries pushBack [format [_format, _woundDescription], _color];
-        };
-    } forEach (_wounds getOrDefault [ALL_BODY_PARTS select _selectionN, []]);
-};
-
-[GET_OPEN_WOUNDS(_target), "%1", [1, 1, 1, 1]] call _fnc_processWounds;
-[GET_BANDAGED_WOUNDS(_target), "[B] %1", [0.88, 0.7, 0.65, 1]] call _fnc_processWounds;
-[GET_STITCHED_WOUNDS(_target), "[S] %1", [0.7, 0.7, 0.7, 1]] call _fnc_processWounds;
-[GET_DEBRIDED_WOUNDS(_target), "[D] %1", [0.7, 0.7, 0.7, 1]] call _fnc_processWounds;
 
 //INTOXICATION by DiGii
 private _poisontype = _target getVariable [QEGVAR(chemical,poisonType),""];
@@ -294,6 +263,39 @@ if (_IVactual > 0) then {
         _entries pushBack [LELSTRING(pharma,IV_16_Display), [0.3, 0.6, 0.3, 1]];
     };
 };
+
+// Add entries for open, bandaged, and stitched wounds
+private _fnc_processWounds = {
+    params ["_wounds", "_format", "_color"];
+
+    {
+        _x params ["_woundClassID", "_amountOf"];
+
+        if (_amountOf > 0) then {
+            private _classIndex = _woundClassID / 10;
+            private _category   = _woundClassID % 10;
+
+            private _className = ACEGVAR(medical_damage,woundClassNames) select _classIndex;
+            private _suffix = ["Minor", "Medium", "Large"] select _category;
+            private _woundName = localize format [ACELSTRING(medical_damage,%1_%2), _className, _suffix];
+
+            private _woundDescription = if (_amountOf >= 1) then {
+                format ["%1x %2", ceil _amountOf, _woundName]
+            } else {
+                format [localize ACELSTRING(medical_gui,PartialX), _woundName]
+            };
+
+            _woundEntries pushBack [format [_format, _woundDescription], _color];
+        };
+    } forEach (_wounds getOrDefault [ALL_BODY_PARTS select _selectionN, []]);
+};
+
+[GET_OPEN_WOUNDS(_target), "%1", [1, 1, 1, 1]] call _fnc_processWounds;
+[GET_BANDAGED_WOUNDS(_target), "[B] %1", [0.88, 0.7, 0.65, 1]] call _fnc_processWounds;
+[GET_STITCHED_WOUNDS(_target), "[S] %1", [0.7, 0.7, 0.7, 1]] call _fnc_processWounds;
+[GET_DEBRIDED_WOUNDS(_target), "[D] %1", [0.7, 0.7, 0.7, 1]] call _fnc_processWounds;
+[GET_CLOTTED_WOUNDS(_target), "[C] %1", [0.4, 0, 0.4, 1]] call _fnc_processWounds;
+[GET_WRAPPED_WOUNDS(_target), "[W] %1", [0.7, 0.5, 0.1, 1]] call _fnc_processWounds;
 
 // Handle no wound entries
 if (_woundEntries isEqualTo []) then {

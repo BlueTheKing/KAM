@@ -1,0 +1,13 @@
+PREP(canBandage);
+PREP(canRemoveSplint);
+PREP(canWrap);
+PREP(canWrapSplint);
+PREP(getBandageTime);
+PREP(getSplintWrapTime);
+PREP(getWrapTime);
+PREP(removeSplint);
+PREP(removeSplintLocal);
+PREP(splintLocal);
+PREP(wrapBodypart);
+PREP(wrapBruise);
+PREP(wrapSplint);

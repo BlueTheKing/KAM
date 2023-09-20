@@ -1,0 +1,1 @@
+#include "\x\kat\addons\damage\script_component.hpp"

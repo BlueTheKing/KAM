@@ -9,7 +9,7 @@
  * 2: Time since last update <NUMBER>
  * 3: Sync value? <BOOL>
  *
- * ReturnValue:
+ * Return Value:
  * Current Heart Rate <NUMBER>
  *
  * Example:

@@ -244,6 +244,15 @@
 #define VAR_BLOODPRESSURE_CHANGE       QEGVAR(circulation,bloodPressureChange)
 #define GET_BLOODPRESSURE_CHANGE(unit) (unit getVariable [VAR_BLOODPRESSURE_CHANGE, [0,0]])
 
+// Damage
+#define VAR_WRAPPED_WOUNDS             QEGVAR(damage,wrappedWounds)
+#define GET_WRAPPED_WOUNDS(unit)       (unit getVariable [VAR_WRAPPED_WOUNDS, createHashMap])
+#define VAR_CLOTTED_WOUNDS             QEGVAR(damage,clottedWounds)
+#define GET_CLOTTED_WOUNDS(unit)       (unit getVariable [VAR_CLOTTED_WOUNDS, createHashMap])
+#define DEFAULT_SPLINT_VALUES          [0,0,0,0,0,0]
+#define VAR_SPLINTS                    QEGVAR(damage,splintStatus)
+#define GET_SPLINTS(unit)              (unit getVariable [VAR_SPLINTS, DEFAULT_SPLINT_VALUES])
+
 // Surgery
-#define GET_DEBRIDED_WOUNDS(unit)   (unit getVariable [VAR_DEBRIDED_WOUNDS, createHashMap])
-#define VAR_DEBRIDED_WOUNDS   QEGVAR(surgery,debridedWounds)
+#define GET_DEBRIDED_WOUNDS(unit)      (unit getVariable [VAR_DEBRIDED_WOUNDS, createHashMap])
+#define VAR_DEBRIDED_WOUNDS            QEGVAR(surgery,debridedWounds)
