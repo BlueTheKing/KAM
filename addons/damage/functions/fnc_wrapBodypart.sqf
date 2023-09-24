@@ -30,31 +30,15 @@ if (_type isEqualTo 1) then {
     _wrappableList = GET_BANDAGED_WOUNDS(_patient);
 };
 
-private _wrappableListOnPart = _wrappableList getOrDefault [_bodyPart, [], true];
+private _wrappableListOnPart = _wrappableList getOrDefault [_bodyPart, []];
 
 if (_wrappableListOnPart isEqualTo []) exitWith {};
-private _openWounds = GET_OPEN_WOUNDS(_patient) getOrDefault [_bodyPart, [], true];
+private _openWounds = GET_OPEN_WOUNDS(_patient) getOrDefault [_bodyPart, []];
 
-private _fnc_isBodyPartBleeding = {
-    params ["_list"];
-
-    private _isBleeding = false;
-
-    {
-        _x params ["_id", "_amountOf", "_bleedingRate"];
-
-        if (_amountOf > 0 && {_bleedingRate > 0}) exitWith {
-            _isBleeding = true;
-        };
-    } forEach _list;
-
-    _isBleeding;
-};
-
-if (_openWounds isNotEqualTo [] && {[_openWounds] call _fnc_isBodyPartBleeding}) exitWith {}; // Can't wrap while wounds are bleeding
+if (_openWounds isNotEqualTo [] && {[_patient, _bodyPart] call FUNC(isBodyPartBleeding)}) exitWith {}; // Can't wrap while wounds are bleeding
 
 private _wrappedWounds = GET_WRAPPED_WOUNDS(_patient);
-private _wrappedWoundsOnPart = GET_WRAPPED_WOUNDS(_patient) getOrDefault [_bodyPart, [], true];
+private _wrappedWoundsOnPart = _wrappedWounds getOrDefault [_bodyPart, []];
 
 // Handle incrementing or creating new entry for wrapped wounds
 if (_wrappedWoundsOnPart isEqualTo []) then { 

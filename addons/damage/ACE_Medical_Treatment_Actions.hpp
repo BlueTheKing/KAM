@@ -1,6 +1,7 @@
 class ACE_Medical_Treatment_Actions {
     class BasicBandage;
     class Splint;
+    class Morphine;
 
     class PressureBandage: BasicBandage {
         displayName = "Pressure Bandage";
@@ -69,6 +70,17 @@ class ACE_Medical_Treatment_Actions {
         condition = QFUNC(canRemoveSplint);
         treatmentTime = 3;
         callbackSuccess = QFUNC(removeSplint);
+        litter[] = {};
+    };
+    class ChitosanInjector: Morphine {
+        displayName = "Use Chitosan Injector";
+        displayNameProgress = "Using Chitosan Injector";
+        icon = QACEPATHTOF(medical_gui,ui\auto_injector.paa);
+        category = "bandage";
+        allowedSelections[] = {"All"};
+        items[] = {"KAT_chitosanInjector"};
+        condition = QUOTE([ARR_2(_patient, _bodyPart)] call FUNC(isBodyPartBleeding));
+        callbackSuccess = QFUNC(applyChitosanInjector);
         litter[] = {};
     };
 };

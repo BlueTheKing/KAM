@@ -20,12 +20,7 @@
 
 params ["_medic", "_patient", "_bodyPart", ["_type", 0]];
 
-private _isBleeding = false;
-{
-    _x params ["", "_amountOf", "_bleedingRate"];
-    _isBleeding = _amountOf > 0 && {_bleedingRate > 0};
-    if (_isBleeding) then {break};
-} forEach (GET_OPEN_WOUNDS(_patient) get _bodyPart);
+if([_patient, _bodyPart] call FUNC(isBodyPartBleeding)) exitWith {false};
 
 private _condition = false;
 
@@ -47,4 +42,4 @@ switch (_type) do {
     };
 };
 
-!_isBleeding && _condition;
+_condition;
