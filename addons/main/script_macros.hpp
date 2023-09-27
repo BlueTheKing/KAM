@@ -116,26 +116,27 @@
 
 // These variables get stored in object space and used across components
 // Defined here for easy consistency with GETVAR/SETVAR (also a list for reference)
-#define VAR_BLOOD_PRESS       QACEGVAR(medical,bloodPressure)
-#define VAR_BLOOD_VOL         QACEGVAR(medical,bloodVolume)
-#define VAR_WOUND_BLEEDING    QACEGVAR(medical,woundBleeding)
-#define VAR_CRDC_ARRST        QACEGVAR(medical,inCardiacArrest)
-#define VAR_HEART_RATE        QACEGVAR(medical,heartRate)
-#define VAR_PAIN              QACEGVAR(medical,pain)
-#define VAR_PAIN_SUPP         QACEGVAR(medical,painSuppress)
-#define VAR_PERIPH_RES        QACEGVAR(medical,peripheralResistance)
-#define VAR_UNCON             "ACE_isUnconscious"
-#define VAR_OPEN_WOUNDS       QACEGVAR(medical,openWounds)
-#define VAR_BANDAGED_WOUNDS   QACEGVAR(medical,bandagedWounds)
-#define VAR_STITCHED_WOUNDS   QACEGVAR(medical,stitchedWounds)
+#define VAR_BLOOD_PRESS           QACEGVAR(medical,bloodPressure)
+#define VAR_BLOOD_VOL             QACEGVAR(medical,bloodVolume)
+#define VAR_WOUND_BLEEDING        QACEGVAR(medical,woundBleeding)
+#define VAR_CRDC_ARRST            QACEGVAR(medical,inCardiacArrest)
+#define VAR_HEART_RATE            QACEGVAR(medical,heartRate)
+#define VAR_PAIN                  QACEGVAR(medical,pain)
+#define VAR_PAIN_SUPP             QACEGVAR(medical,painSuppress)
+#define VAR_PERIPH_RES            QACEGVAR(medical,peripheralResistance)
+#define VAR_UNCON                 "ACE_isUnconscious"
+#define VAR_OPEN_WOUNDS           QACEGVAR(medical,openWounds)
+#define VAR_BANDAGED_WOUNDS       QACEGVAR(medical,bandagedWounds)
+#define VAR_STITCHED_WOUNDS       QACEGVAR(medical,stitchedWounds)
 // These variables track gradual adjustments (from medication, etc.)
-#define VAR_MEDICATIONS       QACEGVAR(medical,medications)
+#define VAR_MEDICATIONS           QACEGVAR(medical,medications)
 // These variables track the current state of status values above
-#define VAR_HEMORRHAGE        QACEGVAR(medical,hemorrhage)
-#define VAR_IN_PAIN           QACEGVAR(medical,inPain)
-#define VAR_TOURNIQUET        QACEGVAR(medical,tourniquets)
-#define VAR_FRACTURES         QACEGVAR(medical,fractures)
-#define DEFAULT_TOURNIQUET_VALUES   [0,0,0,0,0,0]
+#define VAR_HEMORRHAGE            QACEGVAR(medical,hemorrhage)
+#define VAR_IN_PAIN               QACEGVAR(medical,inPain)
+#define VAR_TOURNIQUET            QACEGVAR(medical,tourniquets)
+#define VAR_FRACTURES             QACEGVAR(medical,fractures)
+#define DEFAULT_TOURNIQUET_VALUES [0,0,0,0,0,0]
+#define DEFAULT_FRACTURE_VALUES   [0,0,0,0,0,0]
 
 // - Unit Functions ---------------------------------------------------
 // Retrieval macros for common unit values

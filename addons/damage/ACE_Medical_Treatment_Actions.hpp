@@ -37,11 +37,12 @@ class ACE_Medical_Treatment_Actions {
     };
     class ElasticWrap: PressureBandage {
         displayName = "Wrap Bruises";
+        displayNameProgress = "Wrapping...";
         items[] = {"KAT_elasticWrap"};
         medicRequired = 1;
         condition = QUOTE([ARR_4(_medic, _patient, _bodyPart, 2)] call FUNC(canWrap));
-        treatmentTime = QFUNC(getBandageTime);
-        callbackSuccess = QFUNC(wrapBruise);
+        treatmentTime = QFUNC(getBruiseWrapTime);
+        callbackSuccess = QFUNC(wrapBruises);
     };
     class ElasticWrapBandages: ElasticWrap {
         displayName = "Wrap Bandaged Wounds";
@@ -82,5 +83,12 @@ class ACE_Medical_Treatment_Actions {
         condition = QUOTE([ARR_2(_patient, _bodyPart)] call FUNC(isBodyPartBleeding));
         callbackSuccess = QFUNC(applyChitosanInjector);
         litter[] = {};
+    };
+    class SurgicalKit;
+    class StitchWrappedWounds: SurgicalKit {
+        displayName = "Stitch Wrapped Wounds";
+        treatmentTime = QFUNC(getStitchWrapTime);
+        condition = QFUNC(canStitchWrapped);
+        callbackProgress = QUOTE([ARR_4(_args, _elapsedTime, _totalTime, 2)] call FUNC(surgicalKitProgress));
     };
 };

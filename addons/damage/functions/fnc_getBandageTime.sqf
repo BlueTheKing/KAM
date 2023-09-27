@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "..\script_component.hpp"
 /*
  * Author: kymckay
  * Modified: Blue
@@ -24,7 +24,7 @@ params ["_medic", "_patient", "_bodyPart", "_bandage"];
 private _partIndex = ALL_BODY_PARTS find toLower _bodyPart;
 if (_partIndex < 0) exitWith { ERROR_1("invalid partIndex - %1",_this); 0 };
 
-private _targetWounds = [_patient, _bandage, _bodyPart] call FUNC(findMostEffectiveWounds);
+private _targetWounds = [_patient, _bandage, _bodyPart] call ACEFUNC(medical_treatment,findMostEffectiveWounds);
 
 TRACE_1("findMostEffectiveWounds",_targetWounds);
 

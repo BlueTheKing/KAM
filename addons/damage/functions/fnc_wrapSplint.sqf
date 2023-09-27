@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "..\script_component.hpp"
 /*
  * Author: Blue
  * Wrap splint
@@ -26,4 +26,16 @@ _splintStatus set [(ALL_BODY_PARTS find toLower _bodyPart), 2];
 
 _patient setVariable [VAR_SPLINTS, _splintStatus, true];
 
-[_patient, "activity", "%1 wrapped splint", [[_medic] call ACEFUNC(common,getName)]] call ACEFUNC(medical_treatment,addToLog);
+[_patient, "activity", "%1 wrapped a splint", [[_medic] call ACEFUNC(common,getName)]] call ACEFUNC(medical_treatment,addToLog);
+
+// Splint falls off after a while
+[{
+    params ["_patient", "_bodyPart"];
+
+    GET_SPLINTS(_patient) select (ALL_BODY_PARTS find toLower _bodyPart) != 2;
+}, {}, [_patient, _bodyPart], random [900, 1150, 1200], {
+    params ["_patient", "_bodyPart"];
+
+    [objNull, _patient, _bodyPart] call FUNC(removeSplintLocal);
+    ["Splint has fallen off", 1.5, _patient] call ACEFUNC(common,displayTextStructured);
+}] call CBA_fnc_waitUntilAndExecute;

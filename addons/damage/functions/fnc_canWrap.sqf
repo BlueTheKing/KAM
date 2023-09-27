@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "..\script_component.hpp"
 /*
  * Author: Blue
  * Check if body part can be wrapped, body part must not be bleeding

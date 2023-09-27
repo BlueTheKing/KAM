@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "..\script_component.hpp"
 /*
  * Author: Blue
  * Remove splint from limb (treatment)
@@ -19,5 +19,6 @@
 
 params ["_medic", "_patient", "_bodyPart"];
 
-[_patient, "activity", "%1 removed splint", [[_medic] call ACEFUNC(common,getName)]] call ACEFUNC(medical_treatment,addToLog);
 [QGVAR(removeSplintLocal), [_medic, _patient, _bodyPart], _patient] call CBA_fnc_targetEvent;
+
+[_patient, "activity", "%1 removed splint", [[_medic] call ACEFUNC(common,getName)]] call ACEFUNC(medical_treatment,addToLog);

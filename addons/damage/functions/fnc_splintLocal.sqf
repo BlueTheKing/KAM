@@ -38,3 +38,15 @@ if (ACEGVAR(medical,fractures) > 1) then {
 
 [_patient, "ACE_splint"] call ACEFUNC(medical_treatment,addToTriageCard);
 [_patient, "activity", ACELSTRING(medical_treatment,Activity_appliedSplint), [[_medic, false, true] call ACEFUNC(common,getName)]] call ACEFUNC(medical_treatment,addToLog);
+
+// Splint falls off after a while
+[{
+    params ["_patient", "_bodyPart"];
+
+    GET_SPLINTS(_patient) select (ALL_BODY_PARTS find toLower _bodyPart) != 1;
+}, {}, [_patient, _bodyPart], random [120, 180, 240], {
+    params ["_patient", "_bodyPart"];
+
+    [objNull, _patient, _bodyPart] call FUNC(removeSplintLocal);
+    ["Splint has fallen off", 1.5, _patient] call ACEFUNC(common,displayTextStructured);
+}] call CBA_fnc_waitUntilAndExecute;

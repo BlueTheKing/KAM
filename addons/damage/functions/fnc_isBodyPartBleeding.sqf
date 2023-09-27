@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "..\script_component.hpp"
 /*
  * Author: Blue
  * Check if body part has bleeding wounds
@@ -18,6 +18,7 @@
 
 params ["_patient", "_bodyPart"];
 
+//ace_medical_treatment_fnc_canStitch
 private _isBleeding = false;
 {
     _x params ["", "_amountOf", "_bleedingRate"];

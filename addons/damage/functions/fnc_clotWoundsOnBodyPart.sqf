@@ -1,4 +1,4 @@
-#include "script_component.hpp"
+#include "..\script_component.hpp"
 /*
  * Author: Blue
  * Handle clotting wounds on body part
@@ -29,7 +29,6 @@ private _fnc_getWoundsToTreat = {
         _x params ["_id", "_amountOf", "_bleeding"];
 
         private _severityID = _id % 10;
-        systemchat format ["%1 %2 - %3 %4",_id,_lowestID, _amountOf, _bleeding];
         if (_severityID < (_lowestID % 10) && _amountOf > 0 && _bleeding > 0) then {
             _lowestID = _id;
             _woundIndex = _forEachIndex;
