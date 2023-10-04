@@ -65,7 +65,13 @@ if (ACEGVAR(medical_treatment,clearTrauma) == 1) then {
     private _partIndex = ALL_BODY_PARTS find _bodyPart;
     TRACE_2("clearTrauma - clearing trauma after stitching",_bodyPart,_treatedWound);
     private _bodyPartDamage = _patient getVariable [QACEGVAR(medical,bodyPartDamage), []];
-    _bodyPartDamage set [_partIndex, (_bodyPartDamage select _partIndex) - (_treatedDamageOf * _treatedAmountOf)];
+    private _damage = (_bodyPartDamage select _partIndex) - (_treatedDamageOf * _treatedAmountOf);
+    if (_damage > 0.05) then {
+        _bodyPartDamage set [_partIndex, _damage];
+    } else {
+        _bodyPartDamage set [_partIndex, 0];
+    };
+
     _patient setVariable [QACEGVAR(medical,bodyPartDamage), _bodyPartDamage, true];
     TRACE_2("clearTrauma - healed damage",_bodyPart,_treatedDamageOf);
 

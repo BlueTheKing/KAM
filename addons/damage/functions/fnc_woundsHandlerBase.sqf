@@ -184,6 +184,8 @@ private _bodyPartVisParams = [_unit, false, false, false, false]; // params arra
             _existingWounds pushBack _injury;
         };
         _createdWounds = true;
+
+        [_unit, _bodyPart, _classComplex, _woundDamage] call FUNC(handleWoundReopening);
     };
 
     // selection-specific damage only hits the first part
