@@ -22,4 +22,4 @@ params ["_medic", "_patient", "_bodyPart"];
 [QGVAR(applyChitosanInjectorLocal), [_patient, _bodyPart], _patient] call CBA_fnc_targetEvent;
 
 [_patient, "KAT_chitosanInjector"] call ACEFUNC(medical_treatment,addToTriageCard);
-[_patient, "activity", "%1 used %2 on %3", [[_medic] call ACEFUNC(common,getName), "Chitosan Injector", _bodyPart]] call ACEFUNC(medical_treatment,addToLog);
+[_patient, "activity", "%1 used %2", [[_medic] call ACEFUNC(common,getName), "Chitosan Injector"]] call ACEFUNC(medical_treatment,addToLog);

@@ -21,12 +21,27 @@
 params ["_medic", "_patient", "_bodyPart", "_type"];
 
 private _fnc_handleReopening = {
-    params ["_patient", "_bodyPart", "_id", "_bleeding"];
+    params ["_patient", "_bodyPart", "_id"];
 
-    private _delay = [900, 1050, 1200];
+    private _delay = random 4;
 
     [{
-        params ["_patient", "_bodyPart", "_id", "_bleeding"];
+        params ["_patient", "_bodyPart", "_id"];
+        
+        private _wrappedWounds = GET_WRAPPED_WOUNDS(_patient);
+        private _wrappedWoundsOnPart = _wrappedWounds getOrDefault [_bodyPart, []];
+
+        private _wrappedIndex = _wrappedWoundsOnPart findIf {(_x select 0) isEqualTo _id && {_x select 1 > 0}};
+
+        if (_wrappedIndex isEqualTo -1) exitWith {};
+
+        (_wrappedWoundsOnPart select _wrappedIndex) params ["", "_wrappedAmountOf", "_wrappedBleeding", "_wrappedDamage"];
+        private _wrappedWound = [_id, ((_wrappedAmountOf - 1) max 0), _wrappedBleeding, _wrappedDamage];
+
+        _wrappedWoundsOnPart set [_wrappedIndex, _wrappedWound];
+        _wrappedWounds set [_bodyPart, _wrappedWoundsOnPart];
+
+        _patient setVariable [VAR_WRAPPED_WOUNDS, _wrappedWounds, true];
 
         private _openWounds = GET_OPEN_WOUNDS(_patient);
         private _openWoundsOnPart = _openWounds getOrDefault [_bodyPart, []];
@@ -35,9 +50,9 @@ private _fnc_handleReopening = {
 
         if (_index isEqualTo -1) exitWith {};
 
-        (_openWoundsOnPart select _index) params ["", "_woundAmountOf", "", "_damage"];
+        (_openWoundsOnPart select _index) params ["", "_woundAmountOf", "_woundBleeding", "_woundDamage"];
 
-        private _openWound = [_id, (_woundAmountOf + 1), _bleeding, _damage];
+        private _openWound = [_id, (_woundAmountOf + 1), _woundBleeding, _woundDamage];
         _openWoundsOnPart set [_index, _openWound];
         _openWounds set [_bodyPart, _openWoundsOnPart];
 
@@ -46,25 +61,27 @@ private _fnc_handleReopening = {
         private _partIndex = ALL_BODY_PARTS find _bodyPart;
 
         switch (_partIndex) do {
-            case 0: { [_target, true, false, false, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
-            case 1: { [_target, false, true, false, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            case 0: { [_patient, true, false, false, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            case 1: { [_patient, false, true, false, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
             case 2;
-            case 3: { [_target, false, false, true, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
-            default { [_target, false, false, false, true] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            case 3: { [_patient, false, false, true, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            default { [_patient, false, false, false, true] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
         };
 
         if ((ACEGVAR(medical,limping) == 1) && {_partIndex > 3}) then {
             [_patient] call ACEFUNC(medical_engine,updateDamageEffects);
         };
-    }, [_patient, _bodyPart, _id, _bleeding, _damage], _delay] call CBA_fnc_waitAndExecute;
+    }, [_patient, _bodyPart, _id], _delay] call CBA_fnc_waitAndExecute;
 };
 
 private _wrappableList = createHashMap;
 private _output = "bandages";
+private _woundsVar = VAR_BANDAGED_WOUNDS;
 
 if (_type isEqualTo 1) then {
     _wrappableList = GET_CLOTTED_WOUNDS(_patient);
     _output = "clotted wounds";
+    _woundsVar = VAR_CLOTTED_WOUNDS;
 } else {
     _wrappableList = GET_BANDAGED_WOUNDS(_patient);
 };
@@ -99,13 +116,13 @@ if (_wrappedWoundsOnPart isEqualTo []) then {
     _wrappedWounds set [_bodyPart, _wrappedWoundsOnPart];
 };
 
-// handle reopening
+// Handle reopening
 {
-    _x params ["_id", "_amountOf", "_bleeding", "_damage"];
+    _x params ["_id", "_amountOf", "", ""];
 
     for "_i" from 1 to _amountOf do {
-        if (random (ceil 100) < 50) then {
-            [_patient, _bodyPart, _id, _bleeding] call _fnc_handleReopening;
+        if (random (floor 100) < 50) then {
+            [_patient, _bodyPart, _id] call _fnc_handleReopening;
         };
     };
 } forEach _wrappableListOnPart;
@@ -114,11 +131,7 @@ _patient setVariable [VAR_WRAPPED_WOUNDS, _wrappedWounds, true];
 
 _wrappableList deleteAt _bodyPart;
 
-if (_type isEqualTo 1) then {
-    _patient setVariable [VAR_CLOTTED_WOUNDS, _wrappableList, true];
-} else {
-    _patient setVariable [VAR_BANDAGED_WOUNDS, _wrappableList, true];
-};
+_patient setVariable [_woundsVar, _wrappableList, true];
 
 // Check if we fixed limping by wrapping this wound (only for leg wounds)
 if (ACEGVAR(medical,limping) == 2 && {_patient getVariable [QACEGVAR(medical,isLimping), false]} && {_bodyPart in ["leftleg", "rightleg"]}) then {

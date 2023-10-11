@@ -2,6 +2,7 @@ class ACE_Medical_Treatment_Actions {
     class BasicBandage;
     class Splint;
     class Morphine;
+    class SurgicalKit;
 
     class PressureBandage: BasicBandage {
         displayName = "Pressure Bandage";
@@ -15,7 +16,6 @@ class ACE_Medical_Treatment_Actions {
         medicRequired = 0;
         allowSelfTreatment = 1;
         allowedSelections[] = {"All"};
-        condition = QFUNC(canBandage);
         treatmentLocations = TREATMENT_LOCATIONS_ALL;
 
         treatmentTime = QFUNC(getBandageTime);
@@ -57,15 +57,23 @@ class ACE_Medical_Treatment_Actions {
         callbackSuccess = QUOTE([ARR_4(_medic, _patient, _bodyPart, 1)] call FUNC(wrapBodypart));
     };
     class ElasticWrapSplint: ElasticWrap {
-        displayName = "Wrap Splint";
+        displayName = "Wrap SAM Splint";
         allowedSelections[] = {"LeftArm", "RightArm", "LeftLeg", "RightLeg"};
         condition = QFUNC(canWrapSplint);
         treatmentTime = QFUNC(getSplintWrapTime);
         callbackSuccess = QFUNC(wrapSplint);
     };
-    class RemoveSplint: Splint {
-        displayName = "Remove Splint";
-        displayNameProgress = "Removing Splint";
+    class ApplySAMSplint: Splint {
+        displayName = "Apply SAM Splint";
+        items[] = {"KAT_SAMSplint"};
+        allowedSelections[] = {"LeftArm", "RightArm", "LeftLeg", "RightLeg"};
+        condition = QACEFUNC(medical_treatment,canSplint);
+        treatmentTime = 3;
+        callbackSuccess = QFUNC(splint);
+    };
+    class RemoveSAMSplint: Splint {
+        displayName = "Remove SAM Splint";
+        displayNameProgress = "Removing SAM Splint";
         allowedSelections[] = {"LeftArm", "RightArm", "LeftLeg", "RightLeg"};
         items[] = {};
         condition = QFUNC(canRemoveSplint);
@@ -84,11 +92,16 @@ class ACE_Medical_Treatment_Actions {
         callbackSuccess = QFUNC(applyChitosanInjector);
         litter[] = {};
     };
-    class SurgicalKit;
     class StitchWrappedWounds: SurgicalKit {
-        displayName = "Stitch Wrapped Wounds";
-        treatmentTime = QFUNC(getStitchWrapTime);
-        condition = QFUNC(canStitchWrapped);
+        displayName = "Use Surgical Kit (Wrapped)";
+        treatmentTime = QUOTE([ARR_3(_patient, _bodyPart, 1)] call FUNC(getStitchTime));
+        condition = QUOTE([ARR_3(_medic, _patient, _bodyPart)] call FUNC(canStitch));
+        callbackProgress = QUOTE([ARR_4(_args, _elapsedTime, _totalTime, 1)] call FUNC(surgicalKitProgress));
+    };
+    class StitchClottedWounds: SurgicalKit {
+        displayName = "Use Surgical Kit (Clotted)";
+        treatmentTime = QUOTE([ARR_3(_patient, _bodyPart, 2)] call FUNC(getStitchTime));
+        condition = QUOTE([ARR_4(_medic, _patient, _bodyPart, 1)] call FUNC(canStitch));
         callbackProgress = QUOTE([ARR_4(_args, _elapsedTime, _totalTime, 2)] call FUNC(surgicalKitProgress));
     };
 };

@@ -38,6 +38,57 @@ private _fnc_getWoundsToTreat = {
     _woundIndex;
 };
 
+private _fnc_handleReopening = {
+    params ["_patient", "_bodyPart", "_id"];
+
+    private _delay = random [3, 4, 5];//random [150, 180, 210];
+
+    [{
+        params ["_patient", "_bodyPart", "_id"];
+        
+        private _clottedWounds = GET_CLOTTED_WOUNDS(_patient);
+        private _clottedWoundsOnPart = _clottedWounds getOrDefault [_bodyPart, []];
+
+        private _clottedIndex = _clottedWoundsOnPart findIf {(_x select 0) isEqualTo _id && {(_x select 1) > 0}};
+
+        if (_clottedIndex isEqualTo -1) exitWith {};
+
+        (_clottedWoundsOnPart select _clottedIndex) params ["", "_clottedAmountOf", "_clottedBleeding", "_clottedDamage"];
+        
+        private _clottedWound = [_id, ((_clottedAmountOf - 1) max 0), _clottedBleeding, _clottedDamage];
+
+        _clottedWoundsOnPart set [_clottedIndex, _clottedWound];
+        _clottedWounds set [_bodyPart, _clottedWoundsOnPart];
+        
+        _patient setVariable [VAR_CLOTTED_WOUNDS, _clottedWounds, true];
+
+        private _openWounds = GET_OPEN_WOUNDS(_patient);
+        private _openWoundsOnPart = _openWounds getOrDefault [_bodyPart, []];
+
+        private _index = _openWoundsOnPart findIf {(_x select 0) isEqualTo _id};
+
+        if (_index isEqualTo -1) exitWith {};
+
+        (_openWoundsOnPart select _index) params ["", "_woundAmountOf", "_woundBleeding", "_woundDamage"];
+
+        private _openWound = [_id, (_woundAmountOf + 1), _woundBleeding, _woundDamage];
+        _openWoundsOnPart set [_index, _openWound];
+        _openWounds set [_bodyPart, _openWoundsOnPart];
+
+        _patient setVariable [VAR_OPEN_WOUNDS, _openWounds, true];
+
+        private _partIndex = ALL_BODY_PARTS find _bodyPart;
+
+        switch (_partIndex) do {
+            case 0: { [_patient, true, false, false, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            case 1: { [_patient, false, true, false, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            case 2;
+            case 3: { [_patient, false, false, true, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+            default { [_patient, false, false, false, true] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
+        };
+    }, [_patient, _bodyPart, _id], _delay] call CBA_fnc_waitAndExecute;
+};
+
 private _openWounds = GET_OPEN_WOUNDS(_patient);
 private _openWoundsOnPart = _openWounds getOrDefault [_bodyPart, []];
 
@@ -45,9 +96,8 @@ private _woundIndex = [_openWoundsOnPart] call _fnc_getWoundsToTreat;
 
 if (_woundIndex isEqualTo -1) exitWith {};
 
-private _openWoundEntry = _openWoundsOnPart select _woundIndex;
-
-_openWoundEntry params ["_woundID", "_woundCount", "_woundBleeding", "_woundDamage"];
+(_openWoundsOnPart select _woundIndex) params ["_woundID", "_woundCount", "_woundBleeding", "_woundDamage"];
+private _openWoundEntry = [_woundID, _woundCount, _woundBleeding, _woundDamage];
 
 private _woundSeverity = _woundID % 10;
 _clottingFactors = _clottingFactors / (_woundSeverity + 1);
@@ -55,7 +105,7 @@ _clottingFactors = _clottingFactors / (_woundSeverity + 1);
 private _woundsRemaining = _woundCount - _clottingFactors;
 private _amountClotted = _clottingFactors;
 
-if (_woundsRemaining < 0) then {
+if (_woundsRemaining < 0) then { // TODO use min/max
     _woundsRemaining = 0;
     _amountClotted = _woundCount;
 };
@@ -78,8 +128,7 @@ if (_clottedWoundsOnPart isEqualTo []) then {
     } else {
         private _foundClottedWoundEntry = _clottedWoundsOnPart select _foundIndex;
         _foundClottedWoundEntry params ["_id", "_amountOf", "_bleeding", "_damage"];
-        private _newClottedEntry = [_id, (_amountOf + _amountClotted), _bleeding, _damage];
-        _clottedWoundsOnPart set [_foundIndex, _newClottedEntry];
+        _clottedWoundsOnPart set [_foundIndex, [_id, (_amountOf + _amountClotted), _bleeding, _damage]];
     };
 };
 
@@ -98,4 +147,10 @@ if (_clottingFactors > 0) then { // Use remaining clot factors
     [_patient, _bodyPart, _clottingFactors] call FUNC(clotWoundsOnBodyPart);
 } else {
     [_patient] call ACEFUNC(medical_status,updateWoundBloodLoss);
+};
+
+for "_i" from 1 to _amountClotted do {
+    if (random (floor 100) < 60) then { // TODO check for TXA
+        [_patient, _bodyPart, _clottedID] call _fnc_handleReopening;
+    };
 };

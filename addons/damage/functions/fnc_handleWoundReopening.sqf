@@ -66,7 +66,7 @@ private _fnc_moveWound = {
         default {_unit setVariable [VAR_BANDAGED_WOUNDS, _woundsHashMap, true];};
     };
 
-    if (_type in [0,1,2]) then {
+    if (_type < 3) then {
         private _partIndex = ALL_BODY_PARTS find _bodyPart;
         private _bodyPartDamage = _unit getVariable [QACEGVAR(medical,bodyPartDamage), [0,0,0,0,0,0]];
         private _damage = (_bodyPartDamage select _partIndex) - _damageToRemove;

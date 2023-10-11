@@ -33,7 +33,7 @@ _patient setVariable [VAR_SPLINTS, _splintStatus, true];
 [_patient] call ACEFUNC(medical_engine,updateDamageEffects);
 
 if (_medic isEqualTo objNull) then {
-	[_patient, "ACE_splint"] call ACEFUNC(common,addToInventory);
+	[_patient, "KAT_SAMsplint"] call ACEFUNC(common,addToInventory);
 } else {
-	[_medic, "ACE_splint"] call ACEFUNC(common,addToInventory);
+	[_medic, "KAT_SAMsplint"] call ACEFUNC(common,addToInventory);
 };

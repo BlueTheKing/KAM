@@ -1,7 +1,7 @@
 #include "..\script_component.hpp"
 /*
  * Author: kymckay
- * Modified: Blue
+ * Modified: Blue // TODO REMOVE
  * Prevents bandage actions from showing if selected body part isn't bleeding.
  * Toggles between showing all or only basic bandage action for advanced setting.
  *

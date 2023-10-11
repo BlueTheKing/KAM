@@ -31,7 +31,7 @@ private _injectedTime = CBA_missionTime;
         params ["_args", "_idPFH"];
         _args params ["_patient", "_bodyPart", "_injectedTime"];
 
-        if (!(alive _patient) || (_injectedTime + 120) < CBA_missionTime) exitWith {
+        if (!(alive _patient) || (_injectedTime + 60) < CBA_missionTime) exitWith {
             [_idPFH] call CBA_fnc_removePerFrameHandler;
         };
 
@@ -44,5 +44,5 @@ private _injectedTime = CBA_missionTime;
                 [_patient, (GET_PAIN(_patient) + 0.02)] call ACEFUNC(medical_status,adjustPainLevel);
             };
         };
-    }, 0.5, [_patient, _bodyPart, _injectedTime]] call CBA_fnc_addPerFrameHandler;
-}, [_patient, _bodyPart, _injectedTime], 5] call CBA_fnc_waitAndExecute;
+    }, 1, [_patient, _bodyPart, _injectedTime]] call CBA_fnc_addPerFrameHandler;
+}, [_patient, _bodyPart, _injectedTime], 4] call CBA_fnc_waitAndExecute;

@@ -17,7 +17,7 @@
  * Continue Treatment <BOOL>
  *
  * Example:
- * [[objNull, player, "head"], 5, 10, 0] call kat_damage_fnc_surgicalKitProgress;
+ * [[objNull, player, "head"], 5, 10, 0] call ace_medical_treatment_fnc_surgicalKitProgress;
  *
  * Public: No
  */
@@ -25,12 +25,21 @@
 params ["_args", "_elapsedTime", "_totalTime", ["_woundType", 0]];
 _args params ["_medic", "_patient", "_bodyPart"];
 
-private _targetWounds = createHashMap;
+private _targetWounds = GET_BANDAGED_WOUNDS(_patient);
+private _timeToStitch = ACEGVAR(medical_treatment,woundStitchTime);
+private _woundVar = VAR_BANDAGED_WOUNDS;
 
 switch (_woundType) do {
-    case 1: {_targetWounds = GET_CLOTTED_WOUNDS(_patient);};
-    case 2: {_targetWounds = GET_WRAPPED_WOUNDS(_patient);};
-    default {_targetWounds = GET_BANDAGED_WOUNDS(_patient);};
+    case 1: {
+        _targetWounds = GET_WRAPPED_WOUNDS(_patient);
+        _timeToStitch = 2;
+        _woundVar = VAR_WRAPPED_WOUNDS;
+    };
+    case 2: {
+        _targetWounds = GET_CLOTTED_WOUNDS(_patient);
+        _woundVar = VAR_CLOTTED_WOUNDS;
+    };
+    default {};
 };
 
 private _targetWoundsOnPart = _targetWounds get _bodyPart;
@@ -39,7 +48,7 @@ private _targetWoundsOnPart = _targetWounds get _bodyPart;
 if (_targetWoundsOnPart isEqualTo []) exitWith {false};
 
 // Not enough time has elapsed to stitch a wound
-if (_totalTime - _elapsedTime > ([_patient, _patient, _bodyPart] call FUNC(getStitchWrapTime)) - 2) exitWith {true};
+if (_totalTime - _elapsedTime > ([_patient, _bodyPart, _woundType] call FUNC(getStitchTime)) - _timeToStitch) exitWith {true};
 
 // Remove the first stitchable wound from the bandaged wounds
 private _treatedWound = _targetWoundsOnPart deleteAt (count _targetWoundsOnPart - 1);
@@ -84,12 +93,7 @@ if (ACEGVAR(medical_treatment,clearTrauma) == 1) then {
     };
 };
 
-switch (_woundType) do {
-    case 1: {_patient setVariable [VAR_CLOTTED_WOUNDS, _targetWounds, true];};
-    case 2: {_patient setVariable [VAR_WRAPPED_WOUNDS, _targetWounds, true];};
-    default {_patient setVariable [VAR_BANDAGED_WOUNDS, _targetWounds, true];};
-};
-
+_patient setVariable [_woundVar, _targetWounds, true];
 _patient setVariable [VAR_STITCHED_WOUNDS, _stitchedWounds, true];
 
 // Check if we fixed limping by stitching this wound (only for leg wounds)
