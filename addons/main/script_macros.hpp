@@ -254,6 +254,5 @@
 #define VAR_SPLINTS                    QEGVAR(damage,splintStatus)
 #define GET_SPLINTS(unit)              (unit getVariable [VAR_SPLINTS, DEFAULT_SPLINT_VALUES])
 
-// Surgery
-#define GET_DEBRIDED_WOUNDS(unit)      (unit getVariable [VAR_DEBRIDED_WOUNDS, createHashMap])
-#define VAR_DEBRIDED_WOUNDS            QEGVAR(surgery,debridedWounds)
+// Pharmacy
+#define GET_BLOOD_LOSS(unit)           ([unit] call EFUNC(pharma,getBloodLoss))
