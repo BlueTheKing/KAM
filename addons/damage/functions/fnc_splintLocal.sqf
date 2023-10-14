@@ -21,7 +21,7 @@
 
 params ["_medic", "_patient", "_bodyPart", "_classname"];
 TRACE_3("splintLocal",_medic,_patient,_bodyPart);
-systemchat format ["%1",_this];
+
 private _partIndex = ALL_BODY_PARTS find toLower _bodyPart;
 
 private _fractures = GET_FRACTURES(_patient);

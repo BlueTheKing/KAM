@@ -57,6 +57,7 @@ class CfgWeapons {
     class ACE_splint;
     class KAT_SAMSplint: ACE_splint {
         author = "Blue";
+        picture = QPATHTOF(ui\samsplint.paa);
         displayName = "SAM Splint";
         class ItemInfo: CBA_MiscItem_ItemInfo {
             mass = 1;

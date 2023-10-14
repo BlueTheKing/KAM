@@ -35,7 +35,7 @@ private _treatmentTimeModifier = 0;
         switch (_id) do {
             case 22: {_woundSeverity = 4};
             case 21: {_woundSeverity = 2};
-            default { };
+            default {};
         };
 
         _woundsToTreat = _woundsToTreat + _amountOf * _woundSeverity;
