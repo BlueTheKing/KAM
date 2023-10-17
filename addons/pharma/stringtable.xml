@@ -247,14 +247,17 @@
         <Key ID="STR_KAT_Pharma_Penthrox_Display">
             <English>Penthrox Inhaler</English>
             <Japanese>ペンスロックス吸入器</Japanese>
+            <French>Inhalateur de Penthrox</French>
         </Key>
         <Key ID="STR_KAT_Pharma_Use_Penthrox">
             <English>Use Penthrox Inhaler</English>
             <Japanese>ペンスロックス吸入器を使う</Japanese>
+            <French>Utiliser l'inhalateur de Penthrox</French>
         </Key>
         <Key ID="STR_KAT_Pharma_Penthrox_DescShort">
             <English>Used to manage moderate pain</English>
             <Japanese>中度の痛みの対処に使用されます</Japanese>
+            <French>Utilisé pour traiter les douleurs modérées</French>
         </Key>
         <Key ID="STR_KAT_Pharma_Naloxone_DescShort">
             <English>Used to reverse opioid overdoses</English>
@@ -1608,7 +1611,7 @@
             <Portuguese>Suprime a dor</Portuguese>
         </Key>
         <Key ID="STR_KAT_Pharma_SETTING_reorientationChance">
-            <English>Chance for succesful reorientation</English>
+            <English>Maximum Reorientation Success Chance</English>
             <Polish>Szansa na pomyślne ocucenie</Polish>
             <Chinesesimp>成功进行恢复体态的几率</Chinesesimp>
             <Italian>Possibilità di un riorientamento riuscito</Italian>
@@ -1621,7 +1624,7 @@
             <Portuguese>Chance de reorientação bem-sucedida</Portuguese>
         </Key>
         <Key ID="STR_KAT_Pharma_SETTING_carbonateChance">
-            <English>Chance for succesful Carbonate use</English>
+            <English>Maximum Carbonate Success Chance</English>
             <Polish>Szansa na pomyślne użycie soli trzeźwiących</Polish>
             <Chinesesimp>成功使用碳酸盐的几率</Chinesesimp>
             <Italian>Possibilità di utilizzare con successo il carbonato</Italian>
@@ -2076,10 +2079,14 @@
         <Key ID="STR_KAT_Pharma_SETTING_medLvl_Penthrox">
             <English>Medical level required for Penthrox Inhaler</English>
             <Japanese>ペンスロックス吸入器の許可</Japanese>
+            <French>Niveau médical requis pour l'inhalateur de Penthrox</French>
+            <Korean>펜트록스를 사용하는 데 필요한 의료 레벨 수준 변경</Korean>
         </Key>
         <Key ID="STR_KAT_Pharma_SETTING_treatmentTime_Penthrox">
             <English>Treatment time for Penthrox Inhaler</English>
             <Japanese>ペンスロックス吸入器の使用時間</Japanese>
+            <French>Durée d'utilisation de l'inhalateur de Penthrox</French>
+            <Korean>펜트록스로 치료하는 시간</Korean>
         </Key>
         <Key ID="STR_KAT_Pharma_SubCategory_Basic">
             <English>Basic Settings</English>
@@ -2368,10 +2375,14 @@
         <Key ID="STR_KAT_Pharma_SubCategory_Penthrox">
             <English>Penthrox Inhaler Settings</English>
             <Japanese>ペンスロックス吸入器設定</Japanese>
+            <French>Paramètres de l'inhalateur de Penthrox</French>
+            <Korean>펜트록스 흡입기 설정</Korean>
         </Key>
         <Key ID="STR_KAT_Pharma_flush_log">
             <English>%1 performed a saline flush</English>
             <Japanese>%1 は生理食塩水フラッシュを実施しました</Japanese>
+            <French>%1 a effectué le rinçage salin</French>
+            <Korean>%1이(가) 식염수 주입을 수행했다</Korean>
         </Key>
         <Key ID="STR_KAT_Pharma_IVblock_closed">
             <English>Patient's IV is blocked</English>
@@ -2820,6 +2831,12 @@
             <Korean>[KAM] 의약품 상자</Korean>
             <Portuguese>[KAM] Caixa de medicamentos</Portuguese>
             <Spanish>[KAM] Caja de medicina</Spanish>
+        </Key>
+        <Key ID="STR_KAT_Pharma_SETTING_staminaMedication">
+            <English>Medication Modifies Stamina</English>
+        </Key>
+        <Key ID="STR_KAT_Pharma_SETTING_staminaMedication_DESC">
+            <English>Allow certain medications to modify (vanilla/advanced fatigue) stamina as a side effect</English>
         </Key>
     </Package>
 </Project>
