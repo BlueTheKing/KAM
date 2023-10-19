@@ -63,9 +63,9 @@ _unit setVariable [QACEGVAR(medical_treatment,occludedMedications), nil, true];
 // Wounds and Injuries
 _unit setVariable [VAR_OPEN_WOUNDS, createHashMap, true];
 _unit setVariable [VAR_BANDAGED_WOUNDS, createHashMap, true];
+_unit setVariable [VAR_STITCHED_WOUNDS, createHashMap, true];
 _unit setVariable [VAR_CLOTTED_WOUNDS, createHashMap, true];
 _unit setVariable [VAR_WRAPPED_WOUNDS, createHashMap, true];
-_unit setVariable [VAR_STITCHED_WOUNDS, createHashMap, true];
 _unit setVariable [QACEGVAR(medical,isLimping), false, true];
 _unit setVariable [QACEGVAR(medical,fractures), [0,0,0,0,0,0], true];
 _unit setVariable [VAR_SPLINTS, DEFAULT_SPLINT_VALUES, true];
