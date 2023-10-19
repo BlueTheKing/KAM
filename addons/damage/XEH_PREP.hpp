@@ -1,6 +1,5 @@
 PREP(applyChitosanInjector);
 PREP(applyChitosanInjectorLocal);
-PREP(canBandage);
 PREP(canRemoveSplint);
 PREP(canStitch);
 PREP(canWrap);

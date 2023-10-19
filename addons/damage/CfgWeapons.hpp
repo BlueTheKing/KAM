@@ -7,9 +7,8 @@ class CfgWeapons {
         author = "Blue";
         model = QACEPATHTOF(medical_treatment,data\bandage.p3d);
         picture = QPATHTOF(ui\pressurebandage.paa);
-        displayName = "Pressure Bandage";//CSTRING(CombatGauze_Display);
-        descriptionShort = "Standard issue bandage";//CSTRING(CombatGauze_Desc_Short);
-        descriptionUse = "";//CSTRING(CombatGauze_Desc_Use);
+        displayName = CSTRING(PressureBandage_Display);
+        descriptionShort = CSTRING(PressureBandage_Desc_Short);
         ACE_isMedicalItem = 1;
         class ItemInfo: CBA_MiscItem_ItemInfo {
             mass = 1;
@@ -20,9 +19,8 @@ class CfgWeapons {
         author = "Blue";
         model = QACEPATHTOF(medical_treatment,data\bandage.p3d);
         picture = QPATHTOF(ui\etd.paa);
-        displayName = "Emergency Trauma Dressing";//CSTRING(CombatGauze_Display);
-        descriptionShort = "Trauma dressing with large surface area";//CSTRING(CombatGauze_Desc_Short);
-        descriptionUse = "";//CSTRING(CombatGauze_Desc_Use);
+        displayName = CSTRING(EmergencyTraumaDressing_Display);
+        descriptionShort = CSTRING(EmergencyTraumaDressing_Desc_Short);
         ACE_isMedicalItem = 1;
         class ItemInfo: CBA_MiscItem_ItemInfo {
             mass = 3;
@@ -33,9 +31,8 @@ class CfgWeapons {
         author = "Blue";
         model = QACEPATHTOF(medical_treatment,data\bandage.p3d);
         picture = QACEPATHTOF(medical_treatment,ui\elasticbandage_ca.paa);
-        displayName = "Elastic Wrap";//CSTRING(CombatGauze_Display);
-        descriptionShort = "Used to wrap bandaged wounds";//CSTRING(CombatGauze_Desc_Short);
-        descriptionUse = "";//CSTRING(CombatGauze_Desc_Use);
+        displayName = CSTRING(ElasticWrap_Display);
+        descriptionShort = CSTRING(ElasticWrap_Desc_Short);
         ACE_isMedicalItem = 1;
         class ItemInfo: CBA_MiscItem_ItemInfo {
             mass = 0.5;
@@ -46,21 +43,21 @@ class CfgWeapons {
         author = "Blue";
         model = QACEPATHTOF(medical_treatment,data\bandage.p3d);
         picture = QPATHTOF(ui\chitosanInjector.paa);
-        displayName = "Chitosan Granulate Injector";//CSTRING(CombatGauze_Display);
-        descriptionShort = "";//CSTRING(CombatGauze_Desc_Short);
-        descriptionUse = "";//CSTRING(CombatGauze_Desc_Use);
+        displayName = CSTRING(ChitosanInjector_Display);
+        descriptionShort = CSTRING(ChitosanInjector_Desc_Short);
         ACE_isMedicalItem = 1;
         class ItemInfo: CBA_MiscItem_ItemInfo {
             mass = 1;
         };
     };
     class ACE_splint;
-    class KAT_SAMSplint: ACE_splint {
+    class KAT_UniversalSplint: ACE_splint {
         author = "Blue";
-        picture = QPATHTOF(ui\samsplint.paa);
-        displayName = "SAM Splint";
+        picture = QPATHTOF(ui\samSplint.paa);
+        displayName = CSTRING(SAMSplint_Display);
+        descriptionShort = CSTRING(SAMSplint_Desc_Short);
         class ItemInfo: CBA_MiscItem_ItemInfo {
-            mass = 1;
+            mass = 0.5;
         };
     };
 };

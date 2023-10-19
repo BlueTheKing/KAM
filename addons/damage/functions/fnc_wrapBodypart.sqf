@@ -23,7 +23,7 @@ params ["_medic", "_patient", "_bodyPart", "_type"];
 private _fnc_handleReopening = {
     params ["_patient", "_bodyPart", "_id"];
 
-    private _delay = random 4;
+    private _delay = random [900, 1050, 1200];
 
     [{
         params ["_patient", "_bodyPart", "_id"];

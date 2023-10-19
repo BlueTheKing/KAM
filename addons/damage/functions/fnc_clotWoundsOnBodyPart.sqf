@@ -41,7 +41,7 @@ private _fnc_getWoundsToTreat = {
 private _fnc_handleReopening = {
     params ["_patient", "_bodyPart", "_id"];
 
-    private _delay = random [3, 4, 5];//random [150, 180, 210];
+    private _delay = random [150, 180, 210];
 
     [{
         params ["_patient", "_bodyPart", "_id"];
