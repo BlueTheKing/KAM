@@ -338,7 +338,7 @@ private _fnc_processWounds = {
 [GET_WRAPPED_WOUNDS(_target), "[W] %1", [0.7, 0.5, 0.1, 1]] call _fnc_processWounds;
 
 if (_ptxEntry isNotEqualTo []) then {
-    _woundEntries pushBack _ptxEntry;
+    _woundEntries append _ptxEntry;
 };
 
 // Handle no wound entries
