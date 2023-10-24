@@ -52,17 +52,24 @@ if (_IVactual > 1) then {
         {
             _x params ["_targetBodyPart"];
 
-            private _bandagedWounds = GET_BANDAGED_WOUNDS(_patient);
-            private _bandagedWoundsOnPart = _bandagedWounds getOrDefault [_targetBodyPart, []];
+            private _targetWounds = GET_BANDAGED_WOUNDS(_patient);
+            private _targetWoundsOnPart = _targetWounds getOrDefault [_targetBodyPart, []];
+            private _varTargetWound = VAR_BANDAGED_WOUNDS;
 
-            if (_bandagedWoundsOnPart isEqualTo [] || [_patient,_x] call ACEFUNC(medical_treatment,hasTourniquetAppliedTo)) then {
+            if (_targetWoundsOnPart isEqualTo []) then {
+                _targetWounds = GET_CLOTTED_WOUNDS(_patient);
+                _targetWoundsOnPart = _targetWounds getOrDefault [_targetBodyPart, []];
+                _varTargetWound = VAR_CLOTTED_WOUNDS;
+            };
+
+            if (_targetWoundsOnPart isEqualTo [] || [_patient,_x] call ACEFUNC(medical_treatment,hasTourniquetAppliedTo)) then {
                 continue;
             };
 
-            private _index = _bandagedWoundsOnPart findIf {!((_x select 0) in [20,21,22])};
+            private _index = _targetWoundsOnPart findIf {!((_x select 0) in [20,21,22])};
 
             if (_index != -1) exitWith {
-                (_bandagedWoundsOnPart select _index) params ["_classID", "_amountOf", "", "_damageOf"];
+                (_targetWoundsOnPart select _index) params ["_classID", "_amountOf", "", "_damageOf"];
 
                 private _treatedWound = [_classID, _amountOf, 0, _damageOf];
 
@@ -75,15 +82,15 @@ if (_IVactual > 1) then {
                     _stitchedWoundsOnPart pushBack _treatedWound;
                 } else {
                     private _wound = _stitchedWoundsOnPart select _woundIndex;
-                    _stitchedWoundsOnPart set [_woundIndex,[(_wound select 1) + _amountOf, _wound select 2, _wound select 3]];
+                    _stitchedWoundsOnPart set [_woundIndex, [(_wound select 1) + _amountOf, _wound select 2, _wound select 3]];
                 };
                 _stitchedWounds set [_targetBodyPart, _stitchedWoundsOnPart];
                 _patient setVariable [VAR_STITCHED_WOUNDS, _stitchedWounds, true];
 
-                _bandagedWoundsOnPart deleteAt _index;
-                _bandagedWounds set [_targetBodyPart, _bandagedWoundsOnPart];
+                _targetWoundsOnPart deleteAt _index;
+                _targetWounds set [_targetBodyPart, _targetWoundsOnPart];
 
-                _patient setVariable [VAR_BANDAGED_WOUNDS, _bandagedWounds, true];
+                _patient setVariable [_varTargetWound, _targetWounds, true];
                 
                 private _partIndex = ALL_BODY_PARTS find _targetBodyPart;
                 private _bodyPartDamage = _patient getVariable [QACEGVAR(medical,bodyPartDamage), []];

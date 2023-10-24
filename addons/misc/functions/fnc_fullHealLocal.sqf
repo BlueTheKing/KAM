@@ -111,7 +111,7 @@ _unit setVariable [QEGVAR(pharma,alphaAction), 1, true];
 _unit setVariable [QEGVAR(pharma,IV), [0,0,0,0,0,0], true];
 _unit setVariable [QEGVAR(pharma,IVpfh), [0,0,0,0,0,0], true];
 _unit setVariable [QEGVAR(pharma,active), false, true];
-_unit setVariable [QEGVAR(pharma,IVPharma_PFH), nil, true];
+_unit setVariable [QEGVAR(pharma,coagulationPFH), -1];
 _unit setVariable [QEGVAR(pharma,pH), 1500, true];
 _unit setVariable [QEGVAR(pharma,kidneyFail), false, true];
 _unit setVariable [QEGVAR(pharma,kidneyArrest), false, true];

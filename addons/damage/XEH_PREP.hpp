@@ -10,6 +10,7 @@ PREP(getBruiseWrapTime);
 PREP(getSplintWrapTime);
 PREP(getStitchTime);
 PREP(getWrapTime);
+PREP(handleCoagulationPFH);
 PREP(handleWoundReopening);
 PREP(isBodyPartBleeding);
 PREP(removeSplint);

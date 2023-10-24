@@ -7,6 +7,7 @@
  * 0: Patient <OBJECT>
  * 1: Body Part <STRING>
  * 2: Usable Clotting Factors <INT>
+ * 3: Clots are unstable <BOOL>
  *
  * Return Value:
  * None
@@ -17,7 +18,7 @@
  * Public: No
  */
 
-params ["_patient", "_bodyPart", ["_clottingFactors", 12]];
+params ["_patient", "_bodyPart", ["_clottingFactors", 12], ["_unstable", true]];
 
 private _fnc_getWoundsToTreat = {
     params ["_woundsList"];
@@ -39,9 +40,13 @@ private _fnc_getWoundsToTreat = {
 };
 
 private _fnc_handleReopening = {
-    params ["_patient", "_bodyPart", "_id"];
+    params ["_patient", "_bodyPart", "_id", "_unstable"];
 
     private _delay = random [150, 180, 210];
+
+    if !(_unstable) then {
+        _delay = random [600, 900, 1200];
+    };
 
     [{
         params ["_patient", "_bodyPart", "_id"];
@@ -86,7 +91,7 @@ private _fnc_handleReopening = {
             case 3: { [_patient, false, false, true, false] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
             default { [_patient, false, false, false, true] call ACEFUNC(medical_engine,updateBodyPartVisuals); };
         };
-    }, [_patient, _bodyPart, _id], _delay] call CBA_fnc_waitAndExecute;
+    }, [_patient, _bodyPart, _id, _unstable], _delay] call CBA_fnc_waitAndExecute;
 };
 
 private _openWounds = GET_OPEN_WOUNDS(_patient);
@@ -149,8 +154,15 @@ if (_clottingFactors > 0) then { // Use remaining clot factors
     [_patient] call ACEFUNC(medical_status,updateWoundBloodLoss);
 };
 
+private _reopenChance = 0.6;
+private _txaCount = [_patient, "TXA"] call ACEFUNC(medical_status,getMedicationCount);
+
+if (_txaCount > 0 || !_unstable) then {
+    _reopenChance = 0.5;
+};
+
 for "_i" from 1 to _amountClotted do {
-    if (random (floor 100) < 60) then { // TODO check for TXA
-        [_patient, _bodyPart, _clottedID] call _fnc_handleReopening;
+    if ((random 1) < _reopenChance) then {
+        [_patient, _bodyPart, _clottedID, _unstable] call _fnc_handleReopening;
     };
 };

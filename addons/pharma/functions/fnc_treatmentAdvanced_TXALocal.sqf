@@ -38,11 +38,12 @@ if (_IVactual > 1) then {
     _patient setVariable [QGVAR(IV), _IVarray, true];
 };
 
-if !(GVAR(coagulation)) then {
+if (GVAR(TXAClotting)) then {
     if !(_block) then {
+        private _startTime = CBA_missionTime;
         [{
             params ["_args", "_idPFH"];
-            _args params ["_patient"];
+            _args params ["_patient", "_startTime"];
 
             private _alive = alive _patient;
             private _exit = true;
@@ -53,6 +54,9 @@ if !(GVAR(coagulation)) then {
 
             private _random = random 1000;
             private _ph = (_patient getVariable [QGVAR(pH), 1500]) - 500;
+            private _factorsLeft = _patient getVariable [QEGVAR(pharma,coagulationFactor), 0];
+
+            if ((_factorsLeft < 1 && GVAR(coagulation)) || !(GVAR(coagulation)) || GET_HEART_RATE(_patient) < 30) exitWith {};
 
             if (_random <= _ph) then {
                 {
@@ -68,16 +72,16 @@ if !(GVAR(coagulation)) then {
                     private _woundIndex = _openWoundsOnPart findIf {(_x select 1) > 0 && (_x select 2) > 0};
                     
                     if (_woundIndex != -1) exitWith {
-                        [QACEGVAR(medical_treatment,bandageLocal), [_patient, _targetBodyPart, "PackingBandage"], _patient] call CBA_fnc_targetEvent;
+                        [_patient, _targetBodyPart, 12] call EFUNC(damage,clotWoundsOnBodyPart);
                         _exit = false;
                     };
                 } forEach ALL_BODY_PARTS_PRIORITY;
             };
 
-            if (!(_alive) || (_exit)) exitWith {
+            if (!(_alive) || _exit || CBA_missionTime > (_startTime + 120)) exitWith {
                 [_idPFH] call CBA_fnc_removePerFrameHandler;
             };
 
-        }, 5, [_patient]] call CBA_fnc_addPerFrameHandler;
+        }, 5, [_patient, _startTime]] call CBA_fnc_addPerFrameHandler;
     };
 };

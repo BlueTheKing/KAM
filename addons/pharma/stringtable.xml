@@ -2522,6 +2522,12 @@
             <Portuguese>Habilita recursos avançados de coagulação e modifica o comportamento de TXA e EACA de acordo.</Portuguese>
             <Spanish>Habilita la coagulación avanzada, modificando los efectos del ATX y del EACA.</Spanish>
         </Key>
+        <Key ID="STR_KAT_Pharma_SETTING_TXAClotting">
+            <English>Enable TXA Clotting</English>
+        </Key>
+        <Key ID="STR_KAT_Pharma_SETTING_TXAClotting_DESC">
+            <English>Enables TXA to clot open wounds (when patient has no coagulation factors left).</English>
+        </Key>
         <Key ID="STR_KAT_Pharma_EACA_Display">
             <English>EACA</English>
             <Italian>EACA (Acido aminocaproico Epsilon)</Italian>

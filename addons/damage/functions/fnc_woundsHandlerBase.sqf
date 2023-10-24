@@ -213,6 +213,14 @@ if (_createdWounds) then {
     };
 
     TRACE_4("exit",_unit,_painLevel,GET_PAIN(_unit),GET_OPEN_WOUNDS(_unit));
+
+    if (EGVAR(pharma,coagulation) && ((!(EGVAR(pharma,AICoagulation)) && (isPlayer _unit)) || EGVAR(pharma,AICoagulation))) then {
+        [{
+            params ["_unit"];
+
+            [QGVAR(handleCoagulationPFH), [_unit], _unit] call CBA_fnc_targetEvent;
+        }, [_unit], 3] call CBA_fnc_waitAndExecute;
+    };
 };
 
 [] //return, no further damage handling

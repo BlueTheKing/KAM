@@ -22,15 +22,7 @@ params ["_medic", "_patient", "_bodyPart"];
 private _condition = ((GET_BANDAGED_WOUNDS(_patient) getOrDefault [_bodyPart, []]) isNotEqualTo []) || ((GET_OPEN_WOUNDS(_patient) getOrDefault [_bodyPart, []]) isNotEqualTo []);
 
 if (_condition) then {
-    private _isBleeding = false;
-    { // ace_medical_treatment_fnc_canBandage
-        _x params ["", "_amountOf", "_bleeding"]; 
-        
-        if (_amountOf * _bleeding > 0) exitWith {
-            _isBleeding = true;
-        };
-    } forEach ((GET_OPEN_WOUNDS(_patient)) getOrDefault [_bodyPart, []]);
-    _isBleeding
+    [_patient, _bodyPart] call FUNC(isBodyPartBleeding);
 } else {
     _condition
 };
