@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="KAT">
+    <Package name="Damage">
+        <Key ID="STR_KAT_Damage_PressureBandage_Display">
+            <English>Pressure Bandage</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_PressureBandage_Desc_Short">
+            <English>Standard issue bandage</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_EmergencyTraumaDressing_Display">
+            <English>Emergency Trauma Dressing</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_EmergencyTraumaDressing_Desc_Short">
+            <English>Trauma dressing with large surface area</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_ElasticWrap_Display">
+            <English>Elastic Wrap</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_ElasticWrap_Desc_Short">
+            <English>Used to wrap bandages and bruises</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_ChitosanInjector_Display">
+            <English>Chitosan Granulate Injector</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_ChitosanInjector_Desc_Short">
+            <English>Hemostatic agent used to rapidly clot exposed wounds</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_ChitosanInjector_Progress">
+            <English>Using Chitosan Injector...</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_SAMSplint_Display">
+            <English>SAM Splint</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_SAMSplint_Desc_Short">
+            <English>Multi-use splint made of malleable aluminium, should be wrapped to keep fracture stable</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Wrap_Bruises">
+            <English>Wrap Bruises</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Wrap_Bandages">
+            <English>Wrap Bandaged Wounds</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Wrap_Clots">
+            <English>Wrap Clotted Wounds</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Wrap_SAMSplint">
+            <English>Wrap SAM Splint</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Wrap_Progress">
+            <English>Wrapping...</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Apply_SAMSplint">
+            <English>Apply SAM Splint</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Apply_SAMSplint_Progress">
+            <English>Applying SAM Splint</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Remove_SAMSplint">
+            <English>Remove SAM Splint</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_Remove_SAMSplint_Progress">
+            <English>Removing SAM Splint</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_UseSurgicalKit_Wrapped">
+            <English>Use Surgical Kit (Wrapped)</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_UseSurgicalKit_Clotted">
+            <English>Use Surgical Kit (Clotted)</English>
+        </Key>
+        <Key ID="STR_KAT_Damage_SETTING_Enable">
+            <English>Wound System Enabled</English>
+        </Key>
+    </Package>
+</Project>

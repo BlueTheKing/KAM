@@ -155,13 +155,16 @@
 #define VAR_OPEN_WOUNDS       QACEGVAR(medical,openWounds)
 #define VAR_BANDAGED_WOUNDS   QACEGVAR(medical,bandagedWounds)
 #define VAR_STITCHED_WOUNDS   QACEGVAR(medical,stitchedWounds)
+
 // These variables track gradual adjustments (from medication, etc.)
-#define VAR_MEDICATIONS       QACEGVAR(medical,medications)
+#define VAR_MEDICATIONS           QACEGVAR(medical,medications)
 // These variables track the current state of status values above
-#define VAR_HEMORRHAGE        QACEGVAR(medical,hemorrhage)
-#define VAR_IN_PAIN           QACEGVAR(medical,inPain)
-#define VAR_TOURNIQUET        QACEGVAR(medical,tourniquets)
-#define VAR_FRACTURES         QACEGVAR(medical,fractures)
+#define VAR_HEMORRHAGE            QACEGVAR(medical,hemorrhage)
+#define VAR_IN_PAIN               QACEGVAR(medical,inPain)
+#define VAR_TOURNIQUET            QACEGVAR(medical,tourniquets)
+#define VAR_FRACTURES             QACEGVAR(medical,fractures)
+#define DEFAULT_TOURNIQUET_VALUES [0,0,0,0,0,0]
+#define DEFAULT_FRACTURE_VALUES   [0,0,0,0,0,0]
 
 // - Unit Functions ---------------------------------------------------
 // Retrieval macros for common unit values
@@ -263,6 +266,15 @@
 #define GET_BLOOD_PRESSURE(unit)       ([unit] call EFUNC(circulation,getBloodPressure))
 #define VAR_BLOODPRESSURE_CHANGE       QEGVAR(circulation,bloodPressureChange)
 #define GET_BLOODPRESSURE_CHANGE(unit) (unit getVariable [VAR_BLOODPRESSURE_CHANGE, [0,0]])
+
+// Damage
+#define VAR_WRAPPED_WOUNDS             QEGVAR(damage,wrappedWounds)
+#define GET_WRAPPED_WOUNDS(unit)       (unit getVariable [VAR_WRAPPED_WOUNDS, createHashMap])
+#define VAR_CLOTTED_WOUNDS             QEGVAR(damage,clottedWounds)
+#define GET_CLOTTED_WOUNDS(unit)       (unit getVariable [VAR_CLOTTED_WOUNDS, createHashMap])
+#define DEFAULT_SPLINT_VALUES          [0,0,0,0,0,0]
+#define VAR_SPLINTS                    QEGVAR(damage,splintStatus)
+#define GET_SPLINTS(unit)              (unit getVariable [VAR_SPLINTS, DEFAULT_SPLINT_VALUES])
 
 // Pharmacy
 #undef GET_BLOOD_LOSS

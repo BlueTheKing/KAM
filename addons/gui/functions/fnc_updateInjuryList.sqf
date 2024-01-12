@@ -334,6 +334,8 @@ private _fnc_processWounds = {
 [GET_OPEN_WOUNDS(_target), "%1", [1, 1, 1, 1]] call _fnc_processWounds;
 [GET_BANDAGED_WOUNDS(_target), "[B] %1", [0.88, 0.7, 0.65, 1]] call _fnc_processWounds;
 [GET_STITCHED_WOUNDS(_target), "[S] %1", [0.7, 0.7, 0.7, 1]] call _fnc_processWounds;
+[GET_CLOTTED_WOUNDS(_target), "[C] %1", [1, 0.5, 0.1, 1]] call _fnc_processWounds;
+[GET_WRAPPED_WOUNDS(_target), "[W] %1", [0.7, 0.5, 0.1, 1]] call _fnc_processWounds;
 
 if (_ptxEntry isNotEqualTo []) then {
     _woundEntries append _ptxEntry;

@@ -19,14 +19,7 @@
 params ["_args", "_elapsedTime", "_totalTime"];
 _args params ["_medic", "_patient", "_bodyPart"];
 
-private _isBleeding = false;
-{ // ace_medical_treatment_fnc_canBandage
-    _x params ["", "_amountOf", "_bleeding"]; 
-    
-    if (_amountOf * _bleeding > 0) exitWith {
-        _isBleeding = true;
-    };
-} forEach ((GET_OPEN_WOUNDS(_patient)) getOrDefault [_bodyPart, []]);
+private _isBleeding = [_patient, _bodyPart] call FUNC(isBodyPartBleeding);
 
 // Stop treatment if there are no treatable wounds left
 if (!_isBleeding && (GET_BANDAGED_WOUNDS(_patient) getOrDefault [_bodyPart, []]) isEqualTo []) exitWith {false};

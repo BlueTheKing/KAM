@@ -64,8 +64,11 @@ _unit setVariable [QACEGVAR(medical_treatment,occludedMedications), nil, true];
 _unit setVariable [VAR_OPEN_WOUNDS, createHashMap, true];
 _unit setVariable [VAR_BANDAGED_WOUNDS, createHashMap, true];
 _unit setVariable [VAR_STITCHED_WOUNDS, createHashMap, true];
+_unit setVariable [VAR_CLOTTED_WOUNDS, createHashMap, true];
+_unit setVariable [VAR_WRAPPED_WOUNDS, createHashMap, true];
 _unit setVariable [QACEGVAR(medical,isLimping), false, true];
 _unit setVariable [QACEGVAR(medical,fractures), [0,0,0,0,0,0], true];
+_unit setVariable [VAR_SPLINTS, DEFAULT_SPLINT_VALUES, true];
 
 //KAT Airway
 _unit setVariable [QEGVAR(airway,occluded), false, true];
@@ -109,7 +112,7 @@ _unit setVariable [QEGVAR(pharma,alphaAction), 1, true];
 _unit setVariable [QEGVAR(pharma,IV), [0,0,0,0,0,0], true];
 _unit setVariable [QEGVAR(pharma,IVpfh), [0,0,0,0,0,0], true];
 _unit setVariable [QEGVAR(pharma,active), false, true];
-_unit setVariable [QEGVAR(pharma,IVPharma_PFH), nil, true];
+_unit setVariable [QEGVAR(pharma,coagulationPFH), -1];
 _unit setVariable [QEGVAR(pharma,pH), 1500, true];
 _unit setVariable [QEGVAR(pharma,kidneyFail), false, true];
 _unit setVariable [QEGVAR(pharma,kidneyArrest), false, true];

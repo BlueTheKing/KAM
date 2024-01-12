@@ -40,6 +40,12 @@ if (random 100 < GVAR(closedReductionFailChance)) exitWith {
 _activeFracture set [_part, 0];
 _fractureArray set [_part, 0];
 
+if (EGVAR(damage,enable)) then {
+    private _splints = GET_SPLINTS(_patient);
+    _splints set [_partIndex, 1];
+    _patient setVariable [VAR_SPLINTS, _splints, true];
+};
+
 _patient setVariable [QGVAR(fractures), _fractureArray, true];
 _patient setVariable [VAR_FRACTURES, _activeFracture, true];
 _patient setVariable [QACEGVAR(medical,isLimping), false, true];

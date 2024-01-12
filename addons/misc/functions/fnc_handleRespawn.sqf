@@ -87,7 +87,14 @@ _unit setVariable [VAR_BLOODPRESSURE_CHANGE, nil, true];
 _unit setVariable [QEGVAR(circulation,isPerformingCPR), false, true];
 _unit setVariable [QEGVAR(circulation,OxygenationPeriod), 0, true];
 
+// KAT Damage
+
+_unit setVariable [VAR_CLOTTED_WOUNDS, createHashMap, true];
+_unit setVariable [VAR_WRAPPED_WOUNDS, createHashMap, true];
+_unit setVariable [VAR_SPLINTS, DEFAULT_SPLINT_VALUES, true];
+
 // KAT Misc
+
 _unit setVariable [QEGVAR(misc,isLeftArmFree), true, true];
 _unit setVariable [QEGVAR(misc,isRightArmFree), true, true];
 _unit setVariable [QEGVAR(misc,isLeftLegFree), true, true];
@@ -104,8 +111,7 @@ _unit setVariable [QEGVAR(pharma,alphaAction), 1, true];
 _unit setVariable [QEGVAR(pharma,IV), [0,0,0,0,0,0], true];
 _unit setVariable [QEGVAR(pharma,IVpfh), [0,0,0,0,0,0], true];
 _unit setVariable [QEGVAR(pharma,active), false, true];
-_unit setVariable [QEGVAR(pharma,IVPharma_PFH), nil, true];
-
+_unit setVariable [QEGVAR(pharma,coagulationPFH), -1];
 
 _unit setVariable [QEGVAR(pharma,pH), 1500, true];
 _unit setVariable [QEGVAR(pharma,kidneyFail), false, true];
@@ -208,54 +214,7 @@ if (EGVAR(pharma,kidneyAction)) then {
     }, 20, [_unit]] call CBA_fnc_addPerFrameHandler;
 };
 
-if (EGVAR(pharma,coagulation)) then {
-    [{
-        params ["_args", "_idPFH"];
-        _args params ["_unit"];
-
-        private _alive = alive _unit;
-
-        if !(_alive) exitWith {
-            [_idPFH] call CBA_fnc_removePerFrameHandler;
-        };
-
-        private _openWounds = _unit getVariable [VAR_OPEN_WOUNDS, []];
-        private _pulse = _unit getVariable [VAR_HEART_RATE, 80];
-        private _coagulationFactor = _unit getVariable [QEGVAR(pharma,coagulationFactor), 10];
-
-        if (_openWounds isEqualTo []) exitWith {};
-        if (_pulse < 20) exitWith {};
-        if (_coagulationFactor == 0) exitWith {};
-
-        private _count = [_unit, "TXA"] call ACEFUNC(medical_status,getMedicationCount);
-
-        if (_count == 0) exitWith {
-            {
-                _x params ["", "_bodyPart", "_amount", "_bleeding"];
-
-                if (_amount * _bleeding > 0) exitWith {
-                    private _part = ALL_BODY_PARTS select _bodyPart;
-                    [QACEGVAR(medical_treatment,bandageLocal), [_unit, _part, "UnstableClot"], _unit] call CBA_fnc_targetEvent;
-                    _unit setVariable [QEGVAR(pharma,coagulationFactor), (_coagulationFactor - 1), true];
-                };
-            } forEach _openWounds;
-        };
-
-        if (_count > 0) exitWith {
-            {
-                _x params ["", "_bodyPart", "_amount", "_bleeding"];
-
-                if (_amount * _bleeding > 0) exitWith {
-                    private _part = ALL_BODY_PARTS select _bodyPart;
-                    [QACEGVAR(medical_treatment,bandageLocal), [_unit, _part, "PackingBandage"], _unit] call CBA_fnc_targetEvent;
-                    _unit setVariable [QEGVAR(pharma,coagulationFactor), (_coagulationFactor - 1), true];
-                };
-            } forEach _openWounds;
-        };
-    }, 8, [_unit]] call CBA_fnc_addPerFrameHandler;
-};
-
-/// Clear Stamina & weapon sway
+/// Clear Stamina & weapon sway 
 if (ACEGVAR(advanced_fatigue,enabled)) then {
     ["kat_LSDF"] call ACEFUNC(advanced_fatigue,removeDutyFactor);
     ["kat_PDF"] call ACEFUNC(advanced_fatigue,removeDutyFactor);

@@ -597,6 +597,28 @@ PREP_RECOMPILE_END;
     [LLSTRING(SETTING_Coagulation), LLSTRING(SETTING_Coagulation_DESC)],
     CBA_SETTINGS_CAT,
     [false],
+    true,
+    {},
+    true
+] call CBA_Settings_fnc_init;
+
+// Enable coagulation for AI units
+[
+    QGVAR(AICoagulation),
+    "CHECKBOX",
+    [LLSTRING(SETTING_AICoagulation), LLSTRING(SETTING_AICoagulation_DESC)],
+    CBA_SETTINGS_CAT,
+    [true],
+    true
+] call CBA_Settings_fnc_init;
+
+// Allow TXA to clot open wounds after patient runs out of coagulation factors
+[
+    QGVAR(TXAClotting),
+    "CHECKBOX",
+    [LLSTRING(SETTING_TXAClotting), LLSTRING(SETTING_TXAClotting_DESC)],
+    CBA_SETTINGS_CAT,
+    [true],
     true
 ] call CBA_Settings_fnc_init;
 

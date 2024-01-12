@@ -97,7 +97,7 @@ private _bodyPartBloodLoss = [0, 0, 0, 0, 0, 0];
         _damage = (_damage / (0.01 max _damageThreshold)) min 1;
         [_damage] call ACEFUNC(medical_gui,damageToRGBA);
     };
-
+    
     private _ctrlBodyPart = _ctrlGroup controlsGroupCtrl _bodyPartIDC;
     _ctrlBodyPart ctrlSetTextColor _bodyPartColor;
 } forEach [
